@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Single Responsability Principle
+ * Single Responsability Principle (SRP)
  * Question: What's the main thing this class will do?
  * Just a single responsability, a single reason, one functionality.
  * Advantages: Reduces class coupling

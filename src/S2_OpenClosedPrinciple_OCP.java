@@ -3,10 +3,10 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * Open Closed Principle
+ * Open Closed Principle (OCP) + Specification Design Pattern
  * A class must be Opened for Extension but Closed for modification
  * Separate extensible behavior behind an interface, and flip the dependencies.
- * Creates separated classes implementing a common interface
+ * Creates separated classes implementing a common interface (Specification)
  */
 public class S2_OpenClosedPrinciple_OCP {
     public static void main(String[] args) {
@@ -101,7 +101,7 @@ interface Filter<T>
 
 class ColorSpecification implements Specification<Product>
 {
-    private Color color;
+    private final Color color;
 
     public ColorSpecification(Color color) {
         this.color = color;
@@ -115,7 +115,7 @@ class ColorSpecification implements Specification<Product>
 
 class SizeSpecification implements Specification<Product>
 {
-    private Size size;
+    private final Size size;
 
     public SizeSpecification(Size size) {
         this.size = size;
@@ -127,9 +127,10 @@ class SizeSpecification implements Specification<Product>
     }
 }
 
+// This is a combinator of Specifications
 class AndSpecification<T> implements Specification<T>
 {
-    private Specification<T> first, second;
+    private final Specification<T> first, second;
 
     public AndSpecification(Specification<T> first, Specification<T> second) {
         this.first = first;
@@ -147,6 +148,6 @@ class BetterFilter implements Filter<Product>
 {
     @Override
     public Stream<Product> filter(List<Product> items, Specification<Product> spec) {
-        return items.stream().filter(p -> spec.isSatisfied(p));
+        return items.stream().filter(spec::isSatisfied);
     }
 }
